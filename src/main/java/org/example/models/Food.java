@@ -1,32 +1,24 @@
 package org.example.models;
 
+import org.example.Database;
+import org.example.Game;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Food {
-
-    private String title;
-    private final float water;
-    private final float food;
-
-    public boolean available = true;
-
-    public Food(String title,float food,float water) {
-        this.food = food;
-        this.water = water;
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public float getWater() {
-        return water;
-    }
-
-    public float getFood() {
+    public int food() throws SQLException {
+        Database db  = new Database();
+        ResultSet rs = db.getData("Character", "Food");
+        int food = 0;
+        while (rs.next()) {
+            food = rs.getInt("Food");
+        }
         return food;
+    }
+    public void eat(int food) throws SQLException{
+        Database db  = new Database();
+        String query = "UPDATE Character SET Food = ?";
+        db.setData(query,food()+food);
     }
 }

@@ -1,44 +1,60 @@
 package org.example.defualtSystem;
 
+
+import org.example.Database;
 import org.example.interfaces.BankInterface;
-import org.example.models.*;
-import org.example.models.Character;
+import org.example.models.User;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.*;
 
-public class Bank extends Industry implements BankInterface {
-
-    private static final int MAX_EMPLOYEE_COUNT = 5;
-    private static final float BASE_EMP_SALARY = 0.5f;
-    private ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
-
-    private Manager manager = null;
-
-    public static  BankTurnover turnover;
-
-    public Bank(Property property,Character root) {
-        super("Bank",property,root,100.0f);
-        turnover = new BankTurnover();
-    }
-
-    public BankAccount newAccount(String username,String password){
-        BankAccount bankAccount = new BankAccount(username,password,0,new Date());
-        accounts.add(bankAccount);
-        return bankAccount;
-    }
-    public boolean registerAsEmp(Character character){
-        if(employees.size() >= MAX_EMPLOYEE_COUNT)return false;
-        Employee employee = new Employee(character.getUserInfo().getUsername(),this,BASE_EMP_SALARY,character.getAccount());
-        employees.add(employee);
-        return true;
-    }
+public class Bank  implements BankInterface {
 
 
-    public String bankDetail(Character character){
-        if(character.getUserInfo().getUsername().equals(manager.getUsername())){
-            return "";
+    @Override
+    public void add(User user) throws SQLException {
+        Connection conn = null;
+        String dbPath = "src/main/resources/org/example/database/" + user.getUsername() + ".db";
+
+        try {
+            // Load the SQLite JDBC driver
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
         }
-        return "Only Manager can see Bank detail";
+
+        try {
+            // Connect to the database using the specified path
+            conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        }
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Bank (User, Balance) VALUES (?, ?)");
+            stmt.setString(1, user.getUsername());
+            stmt.setDouble(2, 10.0);
+            stmt.executeUpdate();
+            stmt.close();
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public double money() throws SQLException {
+        Database db  = new Database();
+        ResultSet rs = db.getData("Bank", "Balance");
+        double balance = 0;
+        while (rs.next()) {
+            balance = rs.getDouble("Balance");
+        }
+        return balance;
+    }
+
+    public void modMoney(double amount) throws SQLException {
+        Database db  = new Database();
+        String query = "UPDATE Bank SET Balance = ?";
+        db.setData(query, amount);
     }
 }

@@ -4,6 +4,6 @@ import org.example.models.User;
 
 import java.sql.SQLException;
 
-public interface BankInterface {
+public interface JobInterface {
     void add(User user) throws SQLException;
 }

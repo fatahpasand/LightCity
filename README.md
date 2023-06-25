@@ -2,6 +2,12 @@
 
 This project is a city-building game that includes various features and systems. The objective is to understand the game logic and design it accordingly.
 
+## Group members:
+Arshia Jalali, Mohammad Tahmasbi, Amirali Fatahpasand
+
+## Responsibilities:
+Amirali Fatahapasand(Advance as much as I can), Arshia Jalali & Mohammad Tahmasbi,(Working on a parallel project)
+
 ## Getting Started
 
 To get started with the project, you need to fork it 

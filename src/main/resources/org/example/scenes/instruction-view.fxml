@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.InstructionController">
+    <Button fx:id="startButton" layoutX="270.0" layoutY="301.0" mnemonicParsing="false" onAction="#startButton" text="Start" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="270.0" />
+   <Text fx:id="text" fill="#9696ff" layoutX="289.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hello and welcome to Lightcity" wrappingWidth="492.13671875" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="30.0">
+      <effect>
+         <DropShadow />
+      </effect></Text>
+</AnchorPane>
