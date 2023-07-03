@@ -1,11 +1,9 @@
 package org.example.interfaces;
 
-import org.example.models.Property;
+import org.example.models.User;
+
+import java.sql.SQLException;
 
 public interface MunicipalityInterface {
-
-//    Buy and sell property
-    Property buyProperty();
-    void sellProperty(Property property);
-    void showProperties();
+    void add(User user) throws SQLException;
 }

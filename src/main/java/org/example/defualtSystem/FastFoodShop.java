@@ -1,17 +1,38 @@
 package org.example.defualtSystem;
 
-import org.example.models.Character;
-import org.example.models.Industry;
-import org.example.models.Property;
 
-public class FastFoodShop extends Industry {
+import org.example.models.Food;
 
-    /**
-     * Industry type example (Business)
-     * */
-    private static final float INCOME = 0.3f;
-    private static final float EMPLOYEE_INCOME = 0.02f;
-    public FastFoodShop(String title, Property property, Character character) {
-        super(title, property, character,EMPLOYEE_INCOME);
+import java.sql.SQLException;
+
+public class FastFoodShop {
+    Food food = new Food();
+    Bank bank = new Bank();
+    public Boolean hotdog() throws SQLException {
+        food.eat(2);
+        if((bank.money() - 0.2) >= 0) {
+            bank.modMoney(bank.money() - 0.2);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public Boolean hamburger() throws SQLException {
+        food.eat(4);
+        if((bank.money() - 0.4) >= 0) {
+            bank.modMoney(bank.money() - 0.4);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public Boolean pizza() throws SQLException {
+        food.eat(6);
+        if((bank.money() - 0.4) >= 0) {
+            bank.modMoney(bank.money() - 0.4);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

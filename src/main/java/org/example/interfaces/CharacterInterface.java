@@ -1,6 +1,9 @@
 package org.example.interfaces;
 
-public interface CharacterInterface {
-    void positionProcessing();
+import org.example.models.User;
 
+import java.sql.SQLException;
+
+public interface CharacterInterface {
+    void add(User user) throws SQLException;
 }
