@@ -32,6 +32,6 @@ public class Life {
         game.timePassed();
         Database db  = new Database();
         String query = "UPDATE Character SET Sleep = ?";
-        db.setData(query,sleepStat()+2);
+        db.setData(query,sleepStat()+4);
     }
 }
