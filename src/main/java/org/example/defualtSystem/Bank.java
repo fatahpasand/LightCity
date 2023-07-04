@@ -1,6 +1,5 @@
 package org.example.defualtSystem;
 
-
 import org.example.Database;
 import org.example.interfaces.BankInterface;
 import org.example.models.User;
@@ -8,8 +7,6 @@ import org.example.models.User;
 import java.sql.*;
 
 public class Bank  implements BankInterface {
-
-
     @Override
     public void add(User user) throws SQLException {
         Connection conn = null;
@@ -41,7 +38,6 @@ public class Bank  implements BankInterface {
             System.err.println("Error: " + e.getMessage());
         }
     }
-
     public double money() throws SQLException {
         Database db  = new Database();
         ResultSet rs = db.getData("Bank", "Balance");
@@ -51,7 +47,6 @@ public class Bank  implements BankInterface {
         }
         return balance;
     }
-
     public void modMoney(double amount) throws SQLException {
         Database db  = new Database();
         String query = "UPDATE Bank SET Balance = ?";

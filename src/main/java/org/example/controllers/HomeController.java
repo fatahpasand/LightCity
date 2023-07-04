@@ -34,19 +34,44 @@ public class HomeController {
     @FXML
     private ToolBar bar;
 
-    public void sleepButton() throws SQLException {
+    public void sleepButton(ActionEvent event) throws SQLException, IOException {
         Life life = new Life();
         life.sleep();
-        initialize();
+        Game game = new Game();
+        game.isAlive(event, "home");
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/home-view.fxml"));
+        AnchorPane root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Image backgroundImage = new Image("file:src/main/resources/org/example/background.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+        BackgroundImage background = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, backgroundSize);
+        root.setBackground(new Background(background));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
-    public void spendTimeButton() throws SQLException {
+    public void spendTimeButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
         game.timePassed();
-        initialize();
+        game.isAlive(event, "home");
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/home-view.fxml"));
+        AnchorPane root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Image backgroundImage = new Image("file:src/main/resources/org/example/background.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+        BackgroundImage background = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, backgroundSize);
+        root.setBackground(new Background(background));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
     public void cityButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "city");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/city-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -69,7 +94,7 @@ public class HomeController {
 
         gameStat.setText("Balance: " + bank.money() +
                 "Br | Food: " + food.food() +
-                "/7 | Sleep = " + life.sleepStat() +
+                "/10 | Sleep = " + life.sleepStat() +
                 " | Day Count = " + game.dayCount() +
                 " | Time = " + game.time()*4 + ":00"
         );

@@ -8,10 +8,8 @@ import java.sql.*;
 import java.util.Random;
 
 public class Municipality implements MunicipalityInterface {
-
     @Override
     public void add(User user) throws SQLException {
-        // Create random number generator
         Random random = new Random();
         int[] prices = new int[20];
         for (int i = 0; i < 20; i++) {
@@ -29,7 +27,6 @@ public class Municipality implements MunicipalityInterface {
         String dbPath = "src/main/resources/org/example/database/" + user.getUsername() + ".db";
 
         try {
-            // Load the SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Error: " + e.getMessage());
@@ -37,7 +34,6 @@ public class Municipality implements MunicipalityInterface {
         }
 
         try {
-            // Connect to the database using the specified path
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -56,7 +52,6 @@ public class Municipality implements MunicipalityInterface {
             System.err.println("Error: " + e.getMessage());
         }
     }
-
     public boolean buyLand(String land_id) throws SQLException {
         Database db  = new Database();
         Bank bank = new Bank();
@@ -76,7 +71,6 @@ public class Municipality implements MunicipalityInterface {
             return false;
         }
     }
-
     public void sellLand(String land_id) throws SQLException {
         Database db = new Database();
         Bank bank = new Bank();

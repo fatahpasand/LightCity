@@ -3,7 +3,6 @@ package org.example.models;
 import org.example.Database;
 import org.example.Game;
 import org.example.defualtSystem.Bank;
-import org.example.defualtSystem.Life;
 import org.example.interfaces.JobInterface;
 
 import java.sql.*;
@@ -20,7 +19,6 @@ public class Job implements JobInterface {
         String dbPath = "src/main/resources/org/example/database/" + user.getUsername() + ".db";
 
         try {
-            // Load the SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Error: " + e.getMessage());
@@ -28,7 +26,6 @@ public class Job implements JobInterface {
         }
 
         try {
-            // Connect to the database using the specified path
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -57,12 +54,10 @@ public class Job implements JobInterface {
 
         return expr;
     }
-
     public boolean checkAnswer(String expression, int answer) {
         // Evaluate the expression and check if the answer is correct
         return evaluateExpression(expression) == answer;
     }
-
     private int evaluateExpression(String expression) {
         // Split the expression into tokens and evaluate the expression using addition and subtraction only
         String[] tokens = expression.split(" ");
@@ -84,7 +79,7 @@ public class Job implements JobInterface {
         game.timePassed();
         Food food = new Food();
         query = "UPDATE Character SET Food = ?";
-        db.setData(query,food.food()-3);
+        db.setData(query,food.food()-2);
     }
     public void promotion(int n) throws SQLException {
         String position;

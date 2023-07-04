@@ -1,7 +1,6 @@
 package org.example.controllers;
 
 import org.example.Main;
-import org.example.models.Character;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class InstructionController {
+    @FXML
+    private Label label;
     @FXML
     private Text text;
     @FXML

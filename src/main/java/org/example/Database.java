@@ -1,8 +1,13 @@
 package org.example;
 
+import javafx.application.Platform;
 import org.example.interfaces.DatabaseInterface;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class Database implements DatabaseInterface {
@@ -12,7 +17,6 @@ public class Database implements DatabaseInterface {
     public static void setdbname(String dbname){
         Database.dbname = dbname;
     }
-
     public boolean createNewDatabase() throws SQLException {
         File file = new File("src/main/resources/org/example/database/" + dbname + ".db");
         boolean fileExists = file.exists();
@@ -23,19 +27,35 @@ public class Database implements DatabaseInterface {
         }
         return false;
     }
-    public void deleteDatabase() {
-        File file = new File("src/main/resources/org/example/database/" + dbname + ".db");
-        boolean fileExists = file.exists();
-        if (fileExists) {
+    public void deleteDatabase(){
+        //I tried everything I could think of to delete the database, but it didn't work. Kill me :)
+
+        Platform.runLater(() -> {
+            Path path = Paths.get("src/main/resources/org/example/database/" + dbname + ".db");
+            Connection connection = null;
             try {
-                if (conn != null && !conn.isClosed()) {
-                    conn.close();
-                }
+                connection = DriverManager.getConnection("jdbc:sqlite:" + path);
+
+                connection.close();
+
+                Thread.sleep(100);
+
+                Files.delete(path);
+                System.out.println("File deleted successfully.");
+            } catch (IOException | InterruptedException e) {
+                System.out.println("Exception occurred: " + e.getMessage());
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        System.out.println("Exception occurred while closing connection: " + e.getMessage());
+                    }
+                }
             }
-            file.delete();
-        }
+        });
     }
     public void createTables() throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/org/example/database/" +
@@ -49,7 +69,7 @@ public class Database implements DatabaseInterface {
                 "Food Integer," +
                 "Sleep Integer," +
                 "Position TEXT," +
-                "CHECK ( (Food <= 7) )" +
+                "CHECK ( (Food <= 10) )" +
                 ")");
         stmt.execute("CREATE TABLE IF NOT EXISTS Job (" +
                 "Work_count Integer," +
@@ -72,15 +92,12 @@ public class Database implements DatabaseInterface {
                 ")");
         stmt.close();
     }
-
     public ResultSet getData(String tableName, String columnName) throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/org/example/database/" +
                 dbname + ".db");
         Statement stmt = conn.createStatement();
         return stmt.executeQuery("SELECT " + columnName + " FROM " + tableName);
-
     }
-
     public void setData(String query, Object... params) throws SQLException {
         conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/org/example/database/" +
                 dbname + ".db");
@@ -91,5 +108,10 @@ public class Database implements DatabaseInterface {
         ps.executeUpdate();
         ps.close();
         conn.close();
+    }
+    public void close() throws SQLException {
+        if (conn != null) {
+            conn.close();
+        }
     }
 }

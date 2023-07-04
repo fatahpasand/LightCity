@@ -43,7 +43,7 @@ public class BuyController implements Initializable {
 
     public void backButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "municipality");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/municipality-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -57,10 +57,9 @@ public class BuyController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
     public void buyButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "municipality");
         String land_id = getID.getText();
         Municipality mun = new Municipality();
         if (!mun.buyLand(land_id)){
@@ -80,7 +79,6 @@ public class BuyController implements Initializable {
             stage.show();
         }
     }
-
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -92,7 +90,7 @@ public class BuyController implements Initializable {
         try {
             gameStat.setText("Balance: " + bank.money() +
                     "Br | Food: " + food.food() +
-                    "/7 | Sleep = " + life.sleepStat() +
+                    "/10 | Sleep = " + life.sleepStat() +
                     " | Day Count = " + game.dayCount() +
                     " | Time = " + game.time() * 4 + ":00"
             );

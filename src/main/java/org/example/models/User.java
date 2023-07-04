@@ -7,7 +7,6 @@ import java.sql.*;
 public class User {
     private String username;
     private String password;
-
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -18,7 +17,6 @@ public class User {
         String dbPath = "src/main/resources/org/example/database/" + username + ".db";
 
         try {
-            // Load the SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Error: " + e.getMessage());
@@ -26,7 +24,6 @@ public class User {
         }
 
         try {
-            // Connect to the database using the specified path
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -44,7 +41,39 @@ public class User {
             System.err.println("Error: " + e.getMessage());
         }
     }
+    public boolean signIn() {
+        Connection conn = null;
+        String dbPath = "src/main/resources/org/example/database/" + username + ".db";
 
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        }
+
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);
+        }
+
+        try {
+            String hashedPassword = hashPassword(password);
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM User WHERE Username=? AND Password=?");
+            stmt.setString(1, username);
+            stmt.setString(2, hashedPassword);
+            ResultSet rs = stmt.executeQuery();
+            int count = rs.getInt(1);
+            rs.close();
+            stmt.close();
+            return count > 0;
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
     public void setPassword(String password) {
         this.password = password;
     }
@@ -57,7 +86,6 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     private static String hashPassword(String password) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

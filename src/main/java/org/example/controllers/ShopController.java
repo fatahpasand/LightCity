@@ -40,7 +40,7 @@ public class ShopController {
     FastFoodShop fsh = new FastFoodShop();
     Food food = new Food();
     public void hotdogButton() throws SQLException {
-        if(food.food() >= 7){
+        if(food.food() >= 10){
             label.setText("Wasting money!!!");
         }else {
             if (fsh.hotdog()) {
@@ -51,7 +51,7 @@ public class ShopController {
         }
     }
     public void hamburgerButton()throws SQLException {
-        if(food.food() >= 7){
+        if(food.food() >= 10){
             label.setText("Wasting money!!!");
         }else {
             if (fsh.hamburger()) {
@@ -62,7 +62,7 @@ public class ShopController {
         }
     }
     public void pizzaButton()throws SQLException {
-        if(food.food() >= 7){
+        if(food.food() >= 10){
             label.setText("Wasting money!!!");
         }else {
             if (fsh.pizza()) {
@@ -73,7 +73,7 @@ public class ShopController {
         }
     }
     public void cityButton(ActionEvent event) throws SQLException, IOException {Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "city");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/city-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -96,7 +96,7 @@ public class ShopController {
 
         gameStat.setText("Balance: " + bank.money() +
                 "Br | Food: " + food.food() +
-                "/7 | Sleep = " + life.sleepStat() +
+                "/10 | Sleep = " + life.sleepStat() +
                 " | Day Count = " + game.dayCount() +
                 " | Time = " + game.time()*4 + ":00"
         );

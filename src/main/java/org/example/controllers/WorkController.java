@@ -33,9 +33,10 @@ public class WorkController {
 
     private  String expression;
     private  Job job = new Job();
+
     public void submitButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         int solution = Integer.parseInt(getSolution.getText());
         if (job.checkAnswer(expression, solution)) {
             job.worked();
@@ -44,11 +45,10 @@ public class WorkController {
         } else {
             label.setText("Wrong!!!");
         }
-
     }
     public void backButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/company-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -62,7 +62,6 @@ public class WorkController {
         stage.setScene(scene);
         stage.show();
     }
-
     @FXML
     public void initialize() throws SQLException{
         this.expression = job.generateExpression();

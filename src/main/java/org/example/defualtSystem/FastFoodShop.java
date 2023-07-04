@@ -1,6 +1,5 @@
 package org.example.defualtSystem;
 
-
 import org.example.models.Food;
 
 import java.sql.SQLException;

@@ -43,7 +43,7 @@ public class CityController {
 
     public void municipalityButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "municipality");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/municipality-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -59,7 +59,7 @@ public class CityController {
     }
     public void companyButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/company-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -75,7 +75,7 @@ public class CityController {
     }
     public void bankButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "bank");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/bank-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -91,7 +91,7 @@ public class CityController {
     }
     public void fastFoodButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "shop");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/shop-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -107,7 +107,7 @@ public class CityController {
     }
     public void homeButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "home");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/home-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -134,7 +134,7 @@ public class CityController {
 
         gameStat.setText("Balance: " + bank.money() +
                 "Br | Food: " + food.food() +
-                "/7 | Sleep = " + life.sleepStat() +
+                "/10 | Sleep = " + life.sleepStat() +
                 " | Day Count = " + game.dayCount() +
                 " | Time = " + game.time()*4 + ":00"
                 );

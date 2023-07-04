@@ -31,7 +31,7 @@ public class JobStatController {
 
     public void backButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/company-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);

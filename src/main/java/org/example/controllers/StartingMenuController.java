@@ -12,7 +12,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class StartingMenuController{
     @FXML
@@ -24,9 +23,21 @@ public class StartingMenuController{
     @FXML
     private Button ExitButton;
 
-    public void ContinueButton(ActionEvent event) throws SQLException{
+    public void ContinueButton(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/signin-menu-view.fxml"));
+        AnchorPane root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Image backgroundImage = new Image("file:src/main/resources/org/example/background.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+        BackgroundImage background = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, backgroundSize);
+        root.setBackground(new Background(background));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
-    public void NewGameButton(ActionEvent event) throws SQLException, IOException {
+    public void NewGameButton(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/signup-menu-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -40,7 +51,7 @@ public class StartingMenuController{
         stage.setScene(scene);
         stage.show();
     }
-    public void ExitButton(ActionEvent event) throws SQLException{
+    public void ExitButton(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

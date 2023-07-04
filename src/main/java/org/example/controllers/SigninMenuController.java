@@ -1,23 +1,26 @@
 package org.example.controllers;
 
-import org.example.Database;
-import org.example.Game;
-import org.example.Main;
-import org.example.models.User;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.Database;
+import org.example.Main;
+import org.example.models.User;
+import org.example.models.Character;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class SignupMenuController {
+public class SigninMenuController {
 
     @FXML
     private Label welcomeText;
@@ -26,20 +29,16 @@ public class SignupMenuController {
     @FXML
     private PasswordField getPassword;
     @FXML
-    private Button signupButton;
+    private Button signinButton;
     @FXML
     private Button backButton;
 
-    public void signupButton(ActionEvent event) throws SQLException, IOException {
-        Database db = new Database();
-        Database.setdbname(getUsername.getText());
-        if(db.createNewDatabase()) {
-            User user = new User(getUsername.getText(),getPassword.getText());
-            db.createTables();
-            user.add();
-            Game game = new Game();
-            game.newGame(user);
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/instruction-view.fxml"));
+    public void signinButton(ActionEvent event) throws SQLException, IOException {
+        User user = new User(getUsername.getText(),getPassword.getText());
+        if(user.signIn()) {
+            Database.setdbname(getUsername.getText());
+            Character character = new Character(user);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(character.position()));
             AnchorPane root = fxmlLoader.load();
             Scene scene = new Scene(root);
             Image backgroundImage = new Image("file:src/main/resources/org/example/background.jpg");
@@ -52,7 +51,7 @@ public class SignupMenuController {
             stage.setScene(scene);
             stage.show();
         }else {
-            welcomeText.setText("Duplicate username");
+            welcomeText.setText("Incorrect credentials");
         }
     }
     public void backButton(ActionEvent event) throws IOException {

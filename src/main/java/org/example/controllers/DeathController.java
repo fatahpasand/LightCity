@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class DeathController {
     @FXML
@@ -19,7 +20,7 @@ public class DeathController {
     @FXML
     private Button okButton;
 
-    public void okButton(ActionEvent event) throws IOException {
+    public void okButton(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/starting-menu-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);

@@ -21,12 +21,14 @@ import java.sql.*;
 
 public class Game implements GameInterface {
 
+    private static User user;
     @Override
     public void continueGame(User user) {
     }
 
     @Override
-    public void startGame(User user) throws SQLException {
+    public void newGame(User user) throws SQLException {
+        Game.user = user;
         Character character = new Character(user);
         character.add(user);
         Municipality municipality = new Municipality();
@@ -43,7 +45,6 @@ public class Game implements GameInterface {
         String dbPath = "src/main/resources/org/example/database/" + user.getUsername() + ".db";
 
         try {
-            // Load the SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Error: " + e.getMessage());
@@ -51,7 +52,6 @@ public class Game implements GameInterface {
         }
 
         try {
-            // Connect to the database using the specified path
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -102,10 +102,12 @@ public class Game implements GameInterface {
         }
         return balance;
     }
-    public void isAlive(ActionEvent event) throws SQLException, IOException {
+    public void isAlive(ActionEvent event, String position) throws SQLException, IOException {
         Life life = new Life();
+        Character character = new Character();
+        character.setPosition(position);
         if (!life.life()) {
-            Database db = new Database();
+            Database db  = new Database();
             db.deleteDatabase();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/death-view.fxml"));
             AnchorPane root = fxmlLoader.load();

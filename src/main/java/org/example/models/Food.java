@@ -1,7 +1,6 @@
 package org.example.models;
 
 import org.example.Database;
-import org.example.Game;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -36,7 +36,7 @@ public class MunicipalityController {
 
     public void buyButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "municipality");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/buy-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -52,7 +52,7 @@ public class MunicipalityController {
     }
     public void sellButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "municipality");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/sell-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -68,7 +68,7 @@ public class MunicipalityController {
     }
     public void cityButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "city");
         game.timePassed();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/city-view.fxml"));
         AnchorPane root = fxmlLoader.load();
@@ -92,7 +92,7 @@ public class MunicipalityController {
 
         gameStat.setText("Balance: " + bank.money() +
                 "Br | Food: " + food.food() +
-                "/7 | Sleep = " + life.sleepStat() +
+                "/10 | Sleep = " + life.sleepStat() +
                 " | Day Count = " + game.dayCount() +
                 " | Time = " + game.time()*4 + ":00"
         );

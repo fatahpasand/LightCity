@@ -36,7 +36,7 @@ public class CompanyController {
 
     public void workButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/work-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -52,7 +52,7 @@ public class CompanyController {
     }
     public void JobStatButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "company");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/job-stat-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -68,7 +68,7 @@ public class CompanyController {
     }
     public void cityButton(ActionEvent event) throws SQLException, IOException {
         Game game = new Game();
-        game.isAlive(event);
+        game.isAlive(event, "city");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("scenes/city-view.fxml"));
         AnchorPane root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -91,7 +91,7 @@ public class CompanyController {
 
         gameStat.setText("Balance: " + bank.money() +
                 "Br | Food: " + food.food() +
-                "/7 | Sleep = " + life.sleepStat() +
+                "/10 | Sleep = " + life.sleepStat() +
                 " | Day Count = " + game.dayCount() +
                 " | Time = " + game.time()*4 + ":00"
         );
